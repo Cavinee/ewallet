@@ -29,13 +29,25 @@ class UserProvider extends ChangeNotifier {
       UserCredential userCredential = await auth.createUserWithEmailAndPassword(
           email: emailAddress, password: password);
 
-      await db.collection('users').doc(userCredential.user!.uid).set({
-        "fullName": fullName,
-        "userName": userName,
-        "phoneNumber": phoneNumber,
-        "balance": 0,
-        "uid": userCredential.user!.uid
-      });
+      final uniqueUsername =
+          db.collection('users').where('userName', isEqualTo: userName);
+      final snapshot = await uniqueUsername.get();
+
+      if (snapshot.docs.isEmpty) {
+        await db.collection('users').doc(userCredential.user!.uid).set({
+          "fullName": fullName,
+          "userName": userName,
+          "phoneNumber": phoneNumber,
+          "balance": 0,
+          "uid": userCredential.user!.uid
+        });
+      } else {
+        const errSnackBar = SnackBar(
+            content: Text("Username has been registered. Please choose another username"),
+            duration: Duration(seconds: 5));
+        snackbarKey.currentState?.showSnackBar(errSnackBar);
+        return;
+      }
 
       navigatorKey.currentState?.pop();
       const errSnackBar = SnackBar(

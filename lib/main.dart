@@ -2,8 +2,10 @@ import 'package:ewallet/models/user_provider.dart';
 import 'package:ewallet/pages/home_page.dart';
 import 'package:ewallet/pages/loading_screen.dart';
 import 'package:ewallet/pages/login_page.dart';
+import 'package:ewallet/pages/pay_page.dart';
 import 'package:ewallet/pages/sign_up_page.dart';
 import 'package:ewallet/pages/edit_profile.dart';
+import 'package:ewallet/pages/top_up_page.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
@@ -48,7 +50,9 @@ class MyApp extends StatelessWidget {
             '/signup': (context) => const SignUpPage(),
             '/home': (context) => const HomePage(),
             '/profile': (context) => const EditProfile(),
-            '/loading': (context) => const LoadingScreen()
+            '/loading': (context) => const LoadingScreen(),
+            '/topup': (context) => const TopUpPage(),
+            '/pay': (context) => const PayPage()
           },
           debugShowCheckedModeBanner: false,
         );
